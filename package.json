@@ -9,6 +9,11 @@
   "keywords": [
     "node-red-contrib"
   ],
+  "node-red"     : {
+        "nodes": {
+            "execute": "execute.js"
+        }
+   },
   "author": "Sajay Antony",
   "license": "MIT"
 }
