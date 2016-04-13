@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/SajayAntony/node-red-contrib-execute/issues"
   },
-  "homepage": "https://github.com/SajayAntony/node-red-contrib-execute#readme"
+  "homepage": "https://github.com/SajayAntony/node-red-contrib-execute#readme",
+  "dependencies": {
+    "node-red": "^0.13.4"
+  }
 }
