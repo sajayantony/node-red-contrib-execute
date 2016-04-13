@@ -9,11 +9,19 @@
   "keywords": [
     "node-red-contrib"
   ],
-  "node-red"     : {
-        "nodes": {
-            "execute": "execute.js"
-        }
-   },
+  "node-red": {
+    "nodes": {
+      "execute": "execute.js"
+    }
+  },
   "author": "Sajay Antony",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SajayAntony/node-red-contrib-execute.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SajayAntony/node-red-contrib-execute/issues"
+  },
+  "homepage": "https://github.com/SajayAntony/node-red-contrib-execute#readme"
 }
