@@ -51,21 +51,22 @@ module.exports = function(RED) {
                     ex.stdout.on('data', function (data) {
                         //console.log('[exec] stdout: ' + data);
                         if (isUtf8(data)) { msg.payload = data.toString(); }
-                        else { msg.payload = data; }
-                        node.send([msg,null,null]);
+                        else { msg.payload = data; }                        
+                        node.send(msg);
                     });
                     ex.stderr.on('data', function (data) {
                         //console.log('[exec] stderr: ' + data);
                         if (isUtf8(data)) { msg.payload = data.toString(); }
                         else { msg.payload = new Buffer(data); }
-                        node.send([null,msg,null]);
+                        msg.payload = {stderr : msg.payload}                        
+                        node.send(msg);
                     });
                     ex.on('close', function (code) {
                         //console.log('[exec] result: ' + code);
-                        delete node.activeProcesses[ex.pid];
-                        msg.payload = code;
+                        delete node.activeProcesses[ex.pid];                                                          
+                        msg.payload = {exitcode: code};
                         node.status({});
-                        node.send([null,null,msg]);
+                        node.send(msg);
                     });
                     ex.on('error', function (code) {
                         delete node.activeProcesses[ex.pid];
