@@ -18,7 +18,7 @@ module.exports = function(RED) {
     "use strict";
     var spawn = require('child_process').spawn;
     var exec = require('child_process').exec;
-    var isUtf8 = require('is-utf8');
+    var isUtf8 = require('is-utf8');    
 
     function ExecuteNode(n) {
         RED.nodes.createNode(this,n);
@@ -32,6 +32,7 @@ module.exports = function(RED) {
         var node = this;
         this.on("input", function(msg) {
             node.status({fill:"blue",shape:"dot",text:" "});
+            
             if (this.useSpawn === true) {
                 // make the extra args into an array
                 // then prepend with the msg.payload
@@ -44,9 +45,12 @@ module.exports = function(RED) {
                 // slice whole line by spaces (trying to honour quotes);
                 arg = arg.match(/(?:[^\s"]+|"[^"]*")+/g);
                 var cmd = arg.shift();
+                var spawnOptions = {
+                    cwd : msg.cwd
+                };             
                 if (RED.settings.verbose) { node.log(cmd+" ["+arg+"]"); }
                 if (cmd.indexOf(" ") == -1) {
-                    var ex = spawn(cmd,arg);
+                    var ex = spawn(cmd,arg, spawnOptions);
                     node.activeProcesses[ex.pid] = ex;
                     ex.stdout.on('data', function (data) {
                         //console.log('[exec] stdout: ' + data);
