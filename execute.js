@@ -46,8 +46,9 @@ module.exports = function(RED) {
                 arg = arg.match(/(?:[^\s"]+|"[^"]*")+/g);
                 var cmd = arg.shift();
                 var spawnOptions = {
-                    cwd : msg.cwd
-                };             
+                    cwd : msg.cwd,
+                    env : mergeEnv(msg.env)
+                };
                 if (RED.settings.verbose) { node.log(cmd+" ["+arg+"]"); }
                 if (cmd.indexOf(" ") == -1) {
                     var ex = spawn(cmd,arg, spawnOptions);
@@ -123,4 +124,17 @@ module.exports = function(RED) {
         });
     }
     RED.nodes.registerType("execute",ExecuteNode);
+    
+    function mergeEnv(env) {
+        var all = {};
+        for (var key in process.env) {
+            all[key] = process.env[key]
+        }
+        if (env) {
+            for (var k in env) {
+                all[k] = env[k];
+            }
+        }
+        return all;
+    }
 }
