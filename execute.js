@@ -47,7 +47,7 @@ module.exports = function(RED) {
                 var cmd = arg.shift();
                 var spawnOptions = {
                     cwd : msg.cwd,
-                    env : mergeEnv(msg.env)
+                    env : getEnv(msg.env)
                 };
                 if (RED.settings.verbose) { node.log(cmd+" ["+arg+"]"); }
                 if (cmd.indexOf(" ") == -1) {
@@ -125,16 +125,12 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("execute",ExecuteNode);
     
-    function mergeEnv(env) {
-        var all = {};
-        for (var key in process.env) {
-            all[key] = process.env[key]
-        }
+    function getEnv(env) {
         if (env) {
-            for (var k in env) {
-                all[k] = env[k];
-            }
+            return env;
         }
-        return all;
+        else {
+            return process.env;
+        }
     }
 }
